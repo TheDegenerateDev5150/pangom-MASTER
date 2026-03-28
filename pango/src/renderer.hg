@@ -81,6 +81,7 @@ public:
 
 protected:
 #m4begin
+_EQUAL(PangoLayoutRun*,PangoGlyphItem*)
 _CONVERSION(`PangoFont*',`const Glib::RefPtr<Font>&',`Glib::wrap($3, true)')
 _CONVERSION(`PangoGlyphString*',`const GlyphString&',`Glib::wrap($3, true)')
 _CONVERSION(`const AttrShape&',`PangoAttrShape*',`const_cast<PangoAttrShape*>(($3).gobj())')
