@@ -661,6 +661,14 @@
   )
 )
 
+(define-function pango_attr_width_new
+  (c-name "pango_attr_width_new")
+  (return-type "PangoAttribute*")
+  (parameters
+    '("PangoWidth" "width")
+  )
+)
+
 (define-function pango_attr_word_new
   (c-name "pango_attr_word_new")
   (return-type "PangoAttribute*")
@@ -1710,6 +1718,12 @@
   (return-type "PangoWeight")
 )
 
+(define-method get_width
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_get_width")
+  (return-type "PangoWidth")
+)
+
 (define-method hash
   (of-object "PangoFontDescription")
   (c-name "pango_font_description_hash")
@@ -1859,6 +1873,15 @@
   (return-type "none")
   (parameters
     '("PangoWeight" "weight")
+  )
+)
+
+(define-method set_width
+  (of-object "PangoFontDescription")
+  (c-name "pango_font_description_set_width")
+  (return-type "none")
+  (parameters
+    '("PangoWidth" "width")
   )
 )
 
@@ -4020,6 +4043,12 @@
   )
 )
 
+(define-method get_components
+  (of-object "PangoRenderer")
+  (c-name "pango_renderer_get_components")
+  (return-type "PangoRenderComponent")
+)
+
 (define-method get_layout
   (of-object "PangoRenderer")
   (c-name "pango_renderer_get_layout")
@@ -4064,6 +4093,15 @@
   (parameters
     '("PangoRenderPart" "part")
     '("const-PangoColor*" "color")
+  )
+)
+
+(define-method set_components
+  (of-object "PangoRenderer")
+  (c-name "pango_renderer_set_components")
+  (return-type "none")
+  (parameters
+    '("PangoRenderComponent" "components")
   )
 )
 
@@ -4219,6 +4257,16 @@
   (parameters
     '("cairo_t*" "cr")
     '("PangoLayout*" "layout")
+  )
+)
+
+(define-function pango_cairo_layout_path_for_components
+  (c-name "pango_cairo_layout_path_for_components")
+  (return-type "none")
+  (parameters
+    '("cairo_t*" "cr")
+    '("PangoLayout*" "layout")
+    '("PangoRenderComponent" "components")
   )
 )
 

@@ -1,6 +1,7 @@
 <root>
 <substitute_enumerator_name from_prefix="PANGO_UNDERLINE_" to_prefix="Pango::Underline::" />
 <substitute_enumerator_name from_prefix="PANGO_DIRECTION_" to_prefix="Pango::Direction::" />
+<substitute_enumerator_name from_prefix="PANGO_FONT_MASK_" to_prefix="Pango::FontMask::" />
 <substitute_enumerator_name from_prefix="PANGO_GRAVITY_" to_prefix="Pango::Gravity::" />
 <substitute_enumerator_name from_prefix="PANGO_GRAVITY_HINT_" to_prefix="Pango::GravityHint::" />
 <substitute_enumerator_name from_prefix="PANGO_STYLE_" to_prefix="Pango::Style::" />

@@ -186,6 +186,10 @@ listed in parentheses after the description.
 <parameter_description> font-relative size change ([struct@Pango.AttrInt]). Since 1.50
 </parameter_description>
 </parameter>
+<parameter name="PANGO_ATTR_WIDTH">
+<parameter_description> font width ([struct@Pango.AttrInt]). Since: 1.58
+</parameter_description>
+</parameter>
 </parameters>
 </enum>
 
@@ -569,7 +573,7 @@ The bits in a `PangoFontMask` correspond to the set fields in a
 </parameter_description>
 </parameter>
 <parameter name="PANGO_FONT_MASK_STRETCH">
-<parameter_description> the font stretch is specified.
+<parameter_description> the font stretch/width is specified.
 </parameter_description>
 </parameter>
 <parameter name="PANGO_FONT_MASK_SIZE">
@@ -598,6 +602,14 @@ Since: 1.56
 <parameter_description>Font color is specified.
 
 Since: 1.57
+</parameter_description>
+</parameter>
+<parameter name="PANGO_FONT_MASK_WIDTH">
+<parameter_description>Font width is specified.
+
+This is an alias for [flags@Pango.FontMask.STRETCH].
+
+1.58
 </parameter_description>
 </parameter>
 </parameters>
@@ -814,6 +826,50 @@ Since: 1.46
 <parameter name="PANGO_OVERLINE_SINGLE">
 <parameter_description> Draw a single line above the ink
 extents of the text being underlined.
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
+<enum name="PangoRenderComponent">
+<description>
+Flags that specify which components of a layout to include
+in renderer output.
+
+This is more or less parallel to the [enum@Pango.RenderPart] enum,
+but allows separating plain and color glyphs, and specifying more
+than one component.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="PANGO_RENDER_COMPONENT_NONE">
+<parameter_description> No components
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_PLAIN_GLYPH">
+<parameter_description> The plain glyphs of the layout
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_COLOR_GLYPH">
+<parameter_description> The color glyphs of the layout
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_BACKGROUND">
+<parameter_description> Background of the layout
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_UNDERLINE">
+<parameter_description> Underlines of the layout
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_STRIKETHROUGH">
+<parameter_description> Strikethrough lines of the layout
+</parameter_description>
+</parameter>
+<parameter name="PANGO_RENDER_COMPONENT_OVERLINE">
+<parameter_description> Overlines of the layout
 </parameter_description>
 </parameter>
 </parameters>
@@ -1678,6 +1734,58 @@ This enumeration simply provides some common, predefined values.
 </parameter>
 <parameter name="PANGO_WEIGHT_ULTRAHEAVY">
 <parameter_description> the ultraheavy weight (= 1000) Since: 1.24
+</parameter_description>
+</parameter>
+</parameters>
+</enum>
+
+<enum name="PangoWidth">
+<description>
+An enumeration specifying the width of the font relative to other designs
+within a family.
+
+The enumeration values match [enum@PangoStretch], but
+the numeric values are expanded to allow intermediate
+values.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="PANGO_WIDTH_ULTRA_CONDENSED">
+<parameter_description> ultra condensed width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_EXTRA_CONDENSED">
+<parameter_description> extra condensed width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_CONDENSED">
+<parameter_description> condensed width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_SEMI_CONDENSED">
+<parameter_description> semi condensed width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_NORMAL">
+<parameter_description> the normal width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_SEMI_EXPANDED">
+<parameter_description> semi expanded width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_EXPANDED">
+<parameter_description> expanded width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_EXTRA_EXPANDED">
+<parameter_description> extra expanded width
+</parameter_description>
+</parameter>
+<parameter name="PANGO_WIDTH_ULTRA_EXPANDED">
+<parameter_description> ultra expanded width
 </parameter_description>
 </parameter>
 </parameters>
@@ -3199,6 +3307,26 @@ Create a new font weight attribute.
 </return>
 </function>
 
+<function name="pango_attr_width_new">
+<description>
+Create a new font width attribute.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="width">
+<parameter_description> the width
+</parameter_description>
+</parameter>
+</parameters>
+<return> the newly allocated
+`PangoAttribute`, which should be freed with
+[method@Pango.Attribute.destroy]
+
+</return>
+</function>
+
 <function name="pango_attr_word_new">
 <description>
 Marks the range of the attribute as a single word.
@@ -4090,6 +4218,34 @@ Since: 1.10
 </parameter>
 <parameter name="layout">
 <parameter_description> a Pango layout
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_cairo_layout_path_for_components">
+<description>
+Adds components of a `PangoLayout` to the current path
+in the specified cairo context.
+
+The top-left corner of the `PangoLayout` will be at the
+current point of the cairo context.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="cr">
+<parameter_description> a Cairo context
+</parameter_description>
+</parameter>
+<parameter name="layout">
+<parameter_description> a Pango layout
+</parameter_description>
+</parameter>
+<parameter name="components">
+<parameter_description> the components to include
 </parameter_description>
 </parameter>
 </parameters>
@@ -6181,7 +6337,7 @@ Determines if the style attributes of @new_match are a closer match
 for @desc than those of @old_match are, or if @old_match is %NULL,
 determines if @new_match is a match at all.
 
-Approximate matching is done for weight and style; other style attributes
+Approximate matching is done for weight, width and style; other style attributes
 must match exactly. Style attributes are all attributes other than family
 and size-related attributes. Approximate matching for style considers
 %PANGO_STYLE_OBLIQUE and %PANGO_STYLE_ITALIC as matches, but not as good
@@ -6606,6 +6762,28 @@ See [method@Pango.FontDescription.set_weight].
 <return> the weight field for the font description.
 Use [method@Pango.FontDescription.get_set_fields] to find
 out if the field was explicitly set or not.
+</return>
+</function>
+
+<function name="pango_font_description_get_width">
+<description>
+Gets the width field of a font description.
+
+See [method@Pango.FontDescription.set_width].
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`.
+</parameter_description>
+</parameter>
+</parameters>
+<return> the width field for the font description.
+Use [method@Pango.FontDescription.get_set_fields] to find
+out if the field was explicitly set or not.
+
 </return>
 </function>
 
@@ -7073,6 +7251,31 @@ intermediate numeric values are possible.
 </parameter>
 <parameter name="weight">
 <parameter_description> the weight for the font description.
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_font_description_set_width">
+<description>
+Sets the width field of a font description.
+
+The width field specifies how narrow or wide the
+font should be. In addition to the values of the
+[enum@Pango.Width] enumeration, other
+intermediate numeric values are possible.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="desc">
+<parameter_description> a `PangoFontDescription`
+</parameter_description>
+</parameter>
+<parameter name="width">
+<parameter_description> the width for the font description
 </parameter_description>
 </parameter>
 </parameters>
@@ -14861,6 +15064,24 @@ inherited from the environment.
 </return>
 </function>
 
+<function name="pango_renderer_get_components">
+<description>
+Gets the components that are included in the output of the renderer.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="renderer">
+<parameter_description> a `PangoRenderer`
+</parameter_description>
+</parameter>
+</parameters>
+<return> the components
+
+</return>
+</function>
+
 <function name="pango_renderer_get_layout">
 <description>
 Gets the layout currently being rendered using @renderer.
@@ -15035,6 +15256,26 @@ Since: 1.8
 </parameter>
 <parameter name="color">
 <parameter_description> the new color or %NULL to unset the current color
+</parameter_description>
+</parameter>
+</parameters>
+<return></return>
+</function>
+
+<function name="pango_renderer_set_components">
+<description>
+Sets the components to include in the output of the renderer.
+
+Since: 1.58
+
+</description>
+<parameters>
+<parameter name="renderer">
+<parameter_description> a `PangoRenderer`
+</parameter_description>
+</parameter>
+<parameter name="components">
+<parameter_description> the components to include
 </parameter_description>
 </parameter>
 </parameters>
