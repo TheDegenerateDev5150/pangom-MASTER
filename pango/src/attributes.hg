@@ -466,6 +466,15 @@ public:
    */
   static AttrInt create_attr_text_transform(TextTransform transform);
 
+  /** Create a new font width attribute.
+   *
+   * @newin{2,58}
+   *
+   * @param width Pango::Width to apply.
+   * @return An attribute of type AttrInt.
+   */
+  static AttrInt create_attr_width(Width width);
+
   _IGNORE(pango_attribute_as_string, pango_attribute_as_language, pango_attribute_as_int)
   _IGNORE(pango_attribute_as_size, pango_attribute_as_float, pango_attribute_as_color)
   _IGNORE(pango_attribute_as_font_desc, pango_attribute_as_shape, pango_attribute_as_font_features)

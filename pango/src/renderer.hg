@@ -79,6 +79,9 @@ public:
   _WRAP_METHOD(Glib::RefPtr<LayoutLine> get_layout_line(), pango_renderer_get_layout_line, refreturn)
   _WRAP_METHOD(Glib::RefPtr<const LayoutLine> get_layout_line() const, pango_renderer_get_layout_line, refreturn, constversion)
 
+  _WRAP_METHOD(void set_components(RenderComponent components), pango_renderer_set_components, newin "2,58")
+  _WRAP_METHOD(RenderComponent get_components() const, pango_renderer_get_components, newin "2,58")
+
 protected:
 #m4begin
 _EQUAL(PangoLayoutRun*,PangoGlyphItem*)

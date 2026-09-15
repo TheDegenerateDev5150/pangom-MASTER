@@ -33,6 +33,7 @@ _WRAP_ENUM(Weight, PangoWeight, CONV_TO_INT, decl_prefix PANGOMM_API)
 _WRAP_ENUM(FontMask, PangoFontMask, decl_prefix PANGOMM_API)
 _WRAP_ENUM(Gravity, PangoGravity, decl_prefix PANGOMM_API)
 _WRAP_ENUM(FontColor, PangoFontColor, decl_prefix PANGOMM_API)
+_WRAP_ENUM(Width, PangoWidth, decl_prefix PANGOMM_API, newin "2,58")
 
 /** A Pango::FontDescription represents the description of an ideal font.
  * It is used both to list what fonts are available on the system and also for specifying the characteristics of a font to load.
@@ -78,6 +79,8 @@ public:
   _WRAP_METHOD(Weight get_weight() const, pango_font_description_get_weight)
   _WRAP_METHOD(void set_stretch(Stretch stretch), pango_font_description_set_stretch)
   _WRAP_METHOD(Stretch get_stretch() const, pango_font_description_get_stretch)
+  _WRAP_METHOD(void set_width(Width width), pango_font_description_set_width, newin "2,58")
+  _WRAP_METHOD(Width get_width() const, pango_font_description_get_width, newin "2,58")
   _WRAP_METHOD(void set_size(int size), pango_font_description_set_size)
   _WRAP_METHOD(int get_size() const, pango_font_description_get_size)
   _WRAP_METHOD(void set_absolute_size(double size), pango_font_description_set_absolute_size)

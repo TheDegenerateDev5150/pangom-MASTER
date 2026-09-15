@@ -263,6 +263,11 @@ AttrInt Attribute::create_attr_text_transform(TextTransform transform)
   return Glib::wrap((PangoAttrInt*)pango_attr_text_transform_new((PangoTextTransform)transform));
 }
 
+AttrInt Attribute::create_attr_width(Width width)
+{
+  return Glib::wrap((PangoAttrInt*)pango_attr_width_new((PangoWidth)width));
+}
+
 
 AttrString::AttrString()
 {}

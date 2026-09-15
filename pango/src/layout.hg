@@ -35,6 +35,7 @@ namespace Pango
 _WRAP_ENUM(Alignment, PangoAlignment, decl_prefix PANGOMM_API)
 _WRAP_ENUM(WrapMode, PangoWrapMode, decl_prefix PANGOMM_API)
 _WRAP_ENUM(EllipsizeMode, PangoEllipsizeMode, decl_prefix PANGOMM_API)
+_WRAP_ENUM(RenderComponent, PangoRenderComponent, decl_prefix PANGOMM_API, newin "2,58")
 
 /** A Pango::Layout represents an entire paragraph of text.
  * It is initialized with a Pango::Context, UTF-8 string and set of attributes for that string.
@@ -329,6 +330,20 @@ public:
    * @param context A Cairo context.
    */
   void add_to_cairo_context(const Cairo::RefPtr<Cairo::Context>& context);
+
+   /** Adds components of a %Pango::Layout to the current path
+   * in the specified cairo context.
+   *
+   * The top-left corner of the %Pango::Layout will be at the
+   * current point of the cairo context.
+   *
+   * @newin{2,58}
+   *
+   * @param context A Cairo context.
+   * @param components The components to include.
+   */
+  void add_components_to_cairo_context(const Cairo::RefPtr<Cairo::Context>& context,
+    RenderComponent components);
 
   /** Draws a Layout in the specified Cairo @a context. The top-left
    *  corner of the Layout will be drawn at the current point of the
