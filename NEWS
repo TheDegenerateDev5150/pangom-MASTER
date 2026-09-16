@@ -1,3 +1,18 @@
+2.58.0 (stable) 2026-09-16
+
+* Add enums FontColor, Width, RenderComponent.
+* FontDescription: Add Add set/get_color().
+* Attributes: Add create_attr_width().
+* FontDescription: Add set/get_width().
+* Layout: Add add_components_to_cairo_context().
+* Renderer: Add set/get_components().
+  (Kjell Ahlstedt)
+
+Build:
+* Require pango >= 1.58.0.
+  (Kjell Ahlstedt)
+
+
 2.56.2 (stable) 2026-06-25
 
 Documentation:
